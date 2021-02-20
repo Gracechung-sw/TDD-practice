@@ -1,5 +1,8 @@
-const express = require(express);
+const express = require('express');
+const db = require('./config/keys');
+const mongoose = require('mongoose');
 const productRoutes = require('./routes');
+require('dotenv').config();
 
 //Constants
 const PORT = 8080;
@@ -7,7 +10,17 @@ const HOST = '0.0.0.0';
 
 //APP
 const app = express();
-app.use(express.json()); //NOTE: bodyParser대신 express 4.16.0 버전 부터는 express에 들어있는 내장 미들웨어 함수로 bodyParser 모듈을 대체해 줄 수 있다.
+
+mongoose
+  .connect(db.MongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+  .then(() => console.log('MongoDB connected...'))
+  .catch((error) => console.log(error));
+
 app.use('/api/products/', productRoutes);
 
 app.get('/', (req, res) => {
