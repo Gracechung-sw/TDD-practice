@@ -1,10 +1,8 @@
-//describe로 그룹화
-describe('calucation', () => {
-  test('2 더하기 2는 4', () => {
-    expect(2 + 2).toBe(4);
-  });
+const productController = require('../../controller/products');
 
-  test('2 더하기 2는 5가 아님', () => {
-    expect(2 + 2).not.toBe(5);
+describe('Product Controller Create', () => {
+  it('should have a createProduct function', () => {
+    //product 데이터 생성을 위한 함수가 있는지 여부를 확인하기 위한 테스트 코드
+    expect(typeof productController.createProduct).toBe('function');
   });
 });
