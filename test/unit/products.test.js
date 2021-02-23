@@ -31,4 +31,17 @@ describe('Product Controller Create', () => {
     expect(productModel.create).toBeCalledWith(newProduct);
     //그런데 이 테스트에서는 productModel에 의존적이어서는 안된다. 그래서 Mock함수를 사용한다.
   });
+
+  it('should return 201 response code', async () => {
+    await productController.createProduct(req, res, next);
+    expect(res.statusCode).toBe(201);
+    expect(res._isEndCalled()).toBeTruthy(); //node-mocks-http모듈에서 제공하는 matcher(toBeTruthy())로, 결과값이 잘 전달되었는지 확인
+  });
+
+  it('should return json body in response', async () => {
+    //가짜 함수가 어떤 결과값을 반환할 지 mockReturnValue를 사용해서 직접 알려준다.
+    productModel.create.mockReturnValue(newProduct);
+    await productController.createProduct(req, res, next);
+    expect(res._getJSONData()).toStrictEqual(newProduct); //node-mocks-http모듈에서 제공하는 _getJSONData로, 결과값이 잘 전달되었는지 확인
+  });
 });
