@@ -13,3 +13,16 @@ it('POST /api/products', async () => {
   expect(response.body.name).toBe(newProduct.name);
   expect(response.body.description).toBe(newProduct.description);
 });
+
+//에러 처리를 위한 통합 테스트케이스
+// 즉, catch (error) {
+//     next(error);
+//   } 이 부분이 잘 처리되고 있는지를 검사하는 테스트케이스 이다.
+it('should return 500 on POST /api/products', async () => {
+  request(app).post('/api/products').send({ nema: 'error발생용 데이터' }); //에러를 발생시켜야 하니까 잘못된 형태의 데이터를 보내보자
+  //이렇게 했을 때 예상 결과가,
+  expect(response.statusCode).toBe(500); // 서버에러가 발생하기 때문에 500
+  expect(response.body).toStrictEqual({
+    message: 'Product validation failed: description: Path `description` is required.',
+  }); //서버에러 발생시 에러 메세지
+});

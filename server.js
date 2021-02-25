@@ -21,13 +21,20 @@ mongoose
   .then(() => console.log('MongoDB connected...'))
   .catch((error) => console.log(error));
 
-app.use('/api/products/', productRoutes);
+app.use(express.json());
+
+app.use('/api/products', productRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+//Error Handler middleware
+app.use((error, req, res, next) => {
+  res.status(500).json({ message: error.message });
+});
+
+// app.listen(PORT);
+// console.log(`Running on port ${PORT}`)
 
 module.exports = app;
