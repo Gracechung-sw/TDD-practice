@@ -4,9 +4,9 @@ const productController = require('./controller/products');
 
 //Route 정의
 router.post('/', productController.createProduct);
-router.get('/', productController.getProducts);
-router.get('/:productId', productController.getProductById);
-router.put('/:productId', productController.updateProduct);
-router.delete('/:productId', productController.deleteProduct);
+// router.get('/', productController.getProducts);
+// router.get('/:productId', productController.getProductById);
+// router.put('/:productId', productController.updateProduct);
+// router.delete('/:productId', productController.deleteProduct);
 
 module.exports = router; //기본앱(server.js)에서 사용할 수 있도록 export
